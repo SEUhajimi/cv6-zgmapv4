@@ -484,7 +484,9 @@ def scale_box(text, name):
     return text[:m.start(1)] + body + text[m.end(1):]
 
 
-out = scale_box(out, "GRANARIES")
+# 从 V3 缩放（不能在 out 上缩放：重复运行会把已经缩过的范围再缩一遍）
+m = block(out, "GRANARIES")
+out = out[:m.start(1)] + block(scale_box(src, "GRANARIES"), "GRANARIES").group(1) + out[m.end(1):]
 out = re.sub(r"local MAP_W, MAP_H = \d+, \d+", f"local MAP_W, MAP_H = {W2}, {H2}", out)
 open(V4, "w", encoding="utf-8", newline="").write(out)
 

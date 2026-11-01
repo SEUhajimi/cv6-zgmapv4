@@ -61,8 +61,8 @@ local TERRAIN_ROWS = {
 	"SSMSSSMMGGpPGGpGGGpggGGgMMMMMMMMMMMMMMMPpccpgMMMMMPMMPMMpgGGGgPcGggcccccccccccgcc~~~",
 	"MMSSSSSMgcGpMgpgGGpggggPGMMMMMMMMMMMMMMMGpccgGPgGGGGMPMMMMMMMgPccpPccggGgGcccccccc~~",
 	"SSMSSSMMcGGMMGPMggGgGGGPPpgggPPPPPPMMMMPPGcccMMggPggPPMMMMPMPpGccgccGGMgcccpGgcccc~~",
-	"SSSMMMMccpGgMMPGMGgGgGPGPgpGMMcccccPPPpgGgggcccccGgGPPgPGMMPPPGGccccGGGGMccpMgPpcc~~",
-	"SSMSSMMgcgGPPGGgMMPGMPMpPpgccccMMMcccccpGgggpggpcgPggPGPPGPPGGgccccgGpppggppgMggc~~~",
+	"SSSMMMMccpGgMMPGMGgGgGPGPgpGMMcccccPPPpgGgggcccccGgGPPgPGMMPPPGGccccGGGGMccpggPpcc~~",
+	"SSMSSMMgcgGPPGGgMMPGMPMpPpgccccMMMcccccpGgggpggpcgPggPGPPGPPGGgccccgGpppggppggggc~~~",
 	"SSSSSMMpgcpGPPGGGMMPGMGMgPccMMMMGGPPPpcccGcGgPgpgccGPccppPgpgcccccGgMggMGGpcccgcc~~~",
 	"SSMSMMggpcgGMMGGGMGGGMGMGcgPpGgPMMMMMggcccccGMMpGGcccccGGgGccccccpgggPMgpcccpccc~~~~",
 	"SSSSSMPpgPcPPPPGgGGGPMGGGcgGMMMMMMMMMpPgcpcccGggGccccPcccGGcccpgPGGMGppgPPgccggcc~~~",
@@ -119,7 +119,7 @@ local FEATURE_ROWS = {
 	"..........f.....f...f.......................ff.m.ff..............f..................",
 	".........f......f..f........ffff.ff.....f......mm.........f.........................",
 	"..........ff.....f.....f...........ffff....f.......f.......f..ff....ff.f............",
-	"............fff........ff..............f..m......m..ff.....f.ff....ff.fff...f.ff....",
+	"............fff........ff..............f..m......m..ff.....f.ff....ff.fff.....ff....",
 	".............f.....f..f.........f..fff.....ff......ff.......m........ff.......f.....",
 	"......f...f........f...........f.........................f.......f...f.f....f.......",
 	"......f....ff...m.....f................f......m...............f.f....f...f..........",
@@ -165,14 +165,14 @@ local LEADER_BIND = {
 
 -- 粮仓区：x1..x2, y1..y2 范围内多放 n 处粮食资源（见 GenerateMap 4b2）
 local GRANARIES = {
-	{ name = "Guanzhong", x1 = 14, x2 = 21, y1 = 16, y2 = 20, n = 4 },  -- 关中（郑国渠）
-	{ name = "Chengdu", x1 = 4, x2 = 9, y1 = 6, y2 = 11, n = 4 },     -- 成都平原（都江堰）
-	{ name = "Yiluo", x1 = 25, x2 = 30, y1 = 16, y2 = 20, n = 3 },      -- 河洛
-	{ name = "Fen", x1 = 24, x2 = 29, y1 = 20, y2 = 28, n = 3 },        -- 汾河谷地
-	{ name = "Jianghan", x1 = 25, x2 = 33, y1 = 7, y2 = 12, n = 4 },   -- 江汉平原
-	{ name = "Taihu", x1 = 43, x2 = 48, y1 = 7, y2 = 11, n = 3 },      -- 太湖
-	{ name = "Hetao", x1 = 11, x2 = 25, y1 = 31, y2 = 32, n = 4 },      -- 河套平原
-	{ name = "Ningxia", x1 = 9, x2 = 15, y1 = 26, y2 = 31, n = 2 },    -- 宁夏平原
+	{ name = "Guanzhong", x1 = 22, x2 = 33, y1 = 25, y2 = 29, n = 4 },  -- 关中（郑国渠）
+	{ name = "Chengdu", x1 = 6, x2 = 13, y1 = 10, y2 = 15, n = 4 },     -- 成都平原（都江堰）
+	{ name = "Yiluo", x1 = 40, x2 = 47, y1 = 25, y2 = 29, n = 3 },      -- 河洛
+	{ name = "Fen", x1 = 38, x2 = 46, y1 = 30, y2 = 41, n = 3 },        -- 汾河谷地
+	{ name = "Jianghan", x1 = 40, x2 = 52, y1 = 10, y2 = 18, n = 4 },   -- 江汉平原
+	{ name = "Taihu", x1 = 70, x2 = 77, y1 = 10, y2 = 15, n = 3 },      -- 太湖
+	{ name = "Hetao", x1 = 17, x2 = 40, y1 = 46, y2 = 48, n = 4 },      -- 河套平原
+	{ name = "Ningxia", x1 = 14, x2 = 24, y1 = 38, y2 = 46, n = 2 },    -- 宁夏平原
 }
 
 local SITE_RESOURCES = {
@@ -481,7 +481,9 @@ local SITE_RESOURCES = {
 	{ x = 68, y = 31, res = "DEER" },
 	{ x = 43, y = 28, res = "CATTLE" },
 	{ x = 42, y = 31, res = "STONE" },
-	{ x = 43, y = 24, res = "MARBLE" }
+	{ x = 43, y = 24, res = "MARBLE" },
+	{ x = 78, y = 13, res = "SILK" },
+	{ x = 77, y = 12, res = "CRABS" }
 }
 
 local RES_ALTS = {
@@ -2812,7 +2814,13 @@ local RIVER_PAIRS = {
 	{ 19, 21, 20, 22 },
 	{ 19, 21, 19, 22 },
 	{ 18, 21, 19, 22 },
-	{ 20, 22, 21, 22 }
+	{ 20, 22, 21, 22 },
+	-- 苏州：太湖东岸流进长江,
+	{ 77, 13, 76, 13 },
+	{ 76, 13, 77, 14 },
+	{ 77, 14, 76, 14 },
+	{ 76, 14, 76, 15 },
+	{ 76, 15, 77, 15 }
 }
 
 local YELLOW_EDGE_CELLS = {

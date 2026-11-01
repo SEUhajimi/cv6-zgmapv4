@@ -88,7 +88,7 @@ local SITES = {
 	{ key = "LOC_ZHANGUO_CITY_JIANGPU", x = 66, y = 17 },  -- 江浦
 	{ key = "LOC_ZHANGUO_CITY_RUXUWU", x = 65, y = 15 },  -- 濡须坞
 	{ key = "LOC_ZHANGUO_CITY_RUXUKOU", x = 65, y = 11 },  -- 濡须口
-	{ key = "LOC_ZHANGUO_CITY_GUSU", x = 74, y = 12 },  -- 姑苏
+	{ key = "LOC_ZHANGUO_CITY_GUSU", x = 77, y = 13 },  -- 姑苏
 	{ key = "LOC_ZHANGUO_CITY_CHANGSHA", x = 44, y = 3 },  -- 长沙
 	{ key = "LOC_ZHANGUO_CITY_WULING", x = 42, y = 6 },  -- 武陵
 	{ key = "LOC_ZHANGUO_CITY_LINGLING", x = 42, y = 2 },  -- 零陵
