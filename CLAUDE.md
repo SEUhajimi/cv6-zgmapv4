@@ -16,10 +16,17 @@ V4 由巨型的 V3（旁边的 `E:\GitHub-Repos\mapzg-cv6` 仓库，`Zhanguo_V3/
 - `tools/render_map.py`：把地形画成 `地图预览/` 下的预览图（全图、七张分区图和关隘标注图）。关隘位置只作参考。需要 Pillow。
 - `tools/start_sets.py`：按地形重算开局距离表 `START_DIST` 和各人数（2 人起）的开局组合 `SPREAD_SETS`，不带参数只打印，`--write` 写回。需要 numpy。只比较离出生点 `REACH`（10）格内的陆地，每家离最近邻居不超过 `MAX_NEAR`，最小间距 `MIN_GAP` 按地图宽度换算。
 - `tools/balance_starts.py`：给每个出生点 3 格内的陆地、粮食、生产力、丘陵定下限，不够的改地形补（山改丘陵前检查不会开出新通道），`--write` 写回。南京四面是水，生产力达不到下限，是已知情况。
+- `tools/open_pockets.py`：找出被山围住、走不进去的小块陆地，沿最少的山格挖到外面的大块（挖开的山改丘陵），挖前检查只多出死胡同、不会开出新通道，`--write` 写回。V4 正常应只剩 4 块陆地（中原主陆、四川盆地、西南两块，和 V3 一致）。
 - `tools/connect_rivers.py`：游戏里的河必须流进水里，不通水的河段末端会画出小水坑。这个工具把这类河段接到最近的水面，可重复运行。
 - `tools/scale_v4.py`：V3→V4 的一次性转换（读 `../mapzg-cv6/Zhanguo_V3/`）。V4 之后又被 balance_starts.py 改过地形，**不要再运行**，否则覆盖 V4 的地形和数据块。
-- 改了地形后依次运行 `connect_rivers.py`、`balance_starts.py --write`、`start_sets.py --write` 和 `render_map.py`。
+- 改了地形后依次运行 `open_pockets.py --write`、`connect_rivers.py`、`balance_starts.py --write`、`start_sets.py --write` 和 `render_map.py`。
 - `tools/build_workshop.py`：`python tools/build_workshop.py Zhanguo_V4` 按 `.modinfo` 的 `<Files>` 把要上传的文件复制到 `dist/workshop/Zhanguo_V4/`（已 gitignore）。工坊预览图（<1MB）和介绍（BBCode）在 `workshop/Zhanguo_V4/`。
+
+## 网页编辑器（和用户协同微调）
+
+- 页面：https://claude.ai/artifact/DyPWeW3WLY3DxeJ8nQCUsT （私有，只有用户能打开）。由 `tools/build_editor.py` 用 `tools/editor_template.html` 生成到 `dist/editor/map_editor.html`，再用 Artifact 工具发布到同一个 URL（声明 `capabilities: {db: {}}`）。
+- 用户在页面上改的格子存在数据库 `edits` 集合，文档 id 为 `x-y`，字段 x、y、t、f（地形/地貌字符）、bt、bf（改之前）、note（备注）。只有备注、没改地形的条目要按备注手动处理。
+- 用户说「改好了」时：ArtifactData `list` 读 `edits`（`out_dir` 存成 JSON）→ 合成一个列表文件 → `python tools/apply_edits.py <文件>` 先预览、再 `--write` → 依次运行 `open_pockets.py --write`、`connect_rivers.py`、`balance_starts.py --write`、`start_sets.py --write`、`render_map.py` → 向用户汇报 → `build_editor.py` 重新生成并发布页面（新底图）→ 用 ArtifactData `batch` 删掉已应用的 edits 文档。
 
 ## 约定
 

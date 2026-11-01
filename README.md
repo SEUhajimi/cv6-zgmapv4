@@ -19,6 +19,7 @@
 
 - `tools/render_map.py`：生成 `地图预览/` 下的预览图。需要 Pillow。
 - `tools/start_sets.py`：重算开局距离表和开局组合，`--write` 写回地图脚本。需要 numpy。
+- `tools/open_pockets.py`：把被山围住的小块陆地挖通到外面，`--write` 写回。
 - `tools/connect_rivers.py`：把不通水面的河段接到最近的水面。
 - `tools/balance_starts.py`：调平各出生点 3 格内的地形，`--write` 写回。
 - `tools/scale_v4.py`：把 V3 等比缩小成 V4 的一次性转换工具，读旁边 `mapzg-cv6` 仓库里的 V3（已经用过，再运行会覆盖 V4 调平过的地形）。

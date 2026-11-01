@@ -1,0 +1,523 @@
+<title>战国七雄 V4 地形编辑</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* 布局：上方标题条；左边地图画布占满，右边一栏是画笔、格子信息和改动清单；窄屏时右栏落到地图下面 */
+:root {
+  --bg: #eef0ec;        /* 纸面，带一点青铜绿 */
+  --panel: #f8f9f6;
+  --ink: #1d2422;
+  --muted: #5d6a66;
+  --line: #cfd6d1;
+  --accent: #2f7d74;    /* 青铜锈色 */
+  --accent-ink: #ffffff;
+  --mark: #e0a21b;      /* 改动描边 */
+  --seal: #b4372a;      /* 出生点 */
+  --warn: #a8551a;
+  --canvas: #1c2128;
+  --display: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  --body: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14181b; --panel: #1b2024; --ink: #e3e8e5; --muted: #93a19c; --line: #2c3439;
+    --accent: #4fae9f; --accent-ink: #0d1412; --mark: #f0b638; --seal: #e0614f; --warn: #e39a5c; --canvas: #101317;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14181b; --panel: #1b2024; --ink: #e3e8e5; --muted: #93a19c; --line: #2c3439;
+  --accent: #4fae9f; --accent-ink: #0d1412; --mark: #f0b638; --seal: #e0614f; --warn: #e39a5c; --canvas: #101317;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 14px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 12px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px;
+}
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+h1 { font-family: var(--display); font-size: 22px; margin: 0; letter-spacing: .04em; text-wrap: balance; }
+.ver { font-family: var(--mono); color: var(--muted); font-size: 12px; }
+#status { margin-left: auto; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+#status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+#status[data-s="ok"]::before { background: var(--accent); }
+#status[data-s="busy"]::before { background: var(--mark); }
+#status[data-s="off"]::before { background: var(--warn); }
+main { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 12px; }
+#mapwrap { position: relative; min-height: 0; border-radius: 6px; overflow: hidden; background: var(--canvas); touch-action: none; }
+canvas { display: block; width: 100%; height: 100%; }
+#hud { position: absolute; left: 8px; bottom: 8px; font-family: var(--mono); font-size: 12px; color: #e8ece9;
+  background: rgba(10, 14, 18, .72); padding: 4px 8px; border-radius: 4px; pointer-events: none; }
+.zoom { position: absolute; right: 8px; top: 8px; display: flex; flex-direction: column; gap: 4px; }
+.zoom button { width: 32px; height: 32px; font-size: 18px; }
+aside { min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 14px; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 6px; padding: 12px; }
+h2 { font-size: 12px; letter-spacing: .12em; color: var(--muted); margin: 0 0 6px; font-weight: 600; }
+.row { display: flex; flex-wrap: wrap; gap: 6px; }
+button { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px;
+  padding: 4px 8px; cursor: pointer; }
+button:hover { border-color: var(--accent); }
+button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.sw { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: -1px; margin-right: 4px;
+  border: 1px solid rgba(0,0,0,.25); }
+.brush { display: flex; align-items: center; }
+#info { font-size: 13px; line-height: 1.6; }
+#info .k { font-family: var(--mono); }
+#info .warn { color: var(--warn); }
+textarea { width: 100%; box-sizing: border-box; min-height: 56px; font: inherit; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 4px; padding: 6px; resize: vertical; }
+.hint { color: var(--muted); font-size: 12px; line-height: 1.5; }
+#list { display: flex; flex-direction: column; gap: 4px; }
+.item { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 8px; align-items: center; font-size: 12px;
+  padding: 4px 6px; border-radius: 4px; border: 1px solid var(--line); }
+.item .xy { font-family: var(--mono); font-variant-numeric: tabular-nums; cursor: pointer; color: var(--accent); }
+.item .what { min-width: 0; overflow-wrap: anywhere; }
+.item .note { grid-column: 1 / -1; color: var(--muted); overflow-wrap: anywhere; }
+.item button { padding: 1px 6px; font-size: 12px; }
+.empty { color: var(--muted); font-size: 12px; }
+.toggles label { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; margin-right: 10px; }
+@media (max-width: 760px) {
+  body { height: auto; }
+  main { grid-template-columns: minmax(0, 1fr); }
+  #mapwrap { height: 62vh; }
+  aside { overflow: visible; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<header>
+  <h1>战国七雄 V4 地形编辑</h1>
+  <span class="ver" id="ver"></span>
+  <span id="status" data-s="busy">连接中…</span>
+</header>
+<main>
+  <div id="mapwrap">
+    <canvas id="cv"></canvas>
+    <div class="zoom"><button id="zin" aria-label="放大">+</button><button id="zout" aria-label="缩小">−</button><button id="zfit" aria-label="全图" style="font-size:12px">全</button></div>
+    <div id="hud">把鼠标放到格子上看坐标</div>
+  </div>
+  <aside>
+    <section>
+      <h2>操作</h2>
+      <div class="row">
+        <button id="m-paint" aria-pressed="true">画笔</button>
+        <button id="m-pan" aria-pressed="false">拖动 / 查看</button>
+        <button id="undo">撤销一步</button>
+      </div>
+      <p class="hint">画笔模式下按住左键连续涂；按住空格或用右键拖动地图；滚轮缩放。Ctrl+Z 撤销。</p>
+    </section>
+    <section>
+      <h2>地形</h2>
+      <div class="row" id="b-terr"></div>
+    </section>
+    <section>
+      <h2>地貌</h2>
+      <div class="row" id="b-feat"></div>
+    </section>
+    <section>
+      <h2>显示</h2>
+      <div class="toggles">
+        <label><input type="checkbox" id="o-orig"> 改动前</label>
+        <label><input type="checkbox" id="o-res" checked> 资源</label>
+        <label><input type="checkbox" id="o-pass" checked> 关隘</label>
+        <label><input type="checkbox" id="o-river" checked> 河流</label>
+      </div>
+    </section>
+    <section>
+      <h2>选中的格子</h2>
+      <div id="info" class="empty">点一个格子查看，或者给它写备注（比如“这里开个口”）。</div>
+    </section>
+    <section>
+      <h2 id="list-h">改动清单</h2>
+      <div id="list"></div>
+      <div class="row" style="margin-top:8px"><button id="copy">复制改动清单</button></div>
+      <p class="hint">改完告诉 Claude「改好了」。Claude 会读这张清单写回地图脚本，检查关口、封闭小块和开局平衡，再更新这个页面。</p>
+    </section>
+  </aside>
+</main>
+
+<script>
+const D = /*__DATA__*/null;
+const { W, H } = D;
+const TERR = {
+  g: ["草原", "#78aa50"], p: ["平原", "#c4be6e"], d: ["沙漠", "#e4ce96"],
+  G: ["草原丘陵", "#58843a"], P: ["平原丘陵", "#a09652"], D: ["沙漠丘陵", "#c4a86e"],
+  M: ["山脉", "#78685c"], S: ["雪山", "#e8ecf0"], c: ["近海/江湖", "#5c96cd"], "~": ["外海", "#244880"],
+};
+const FEAT = { f: ["森林", "#285c28"], j: ["雨林", "#147846"], m: ["沼泽", "#466e78"], ".": ["无地貌", null] };
+const RES = { HORSES: "马", IRON: "铁", STONE: "石料", FISH: "鱼", RICE: "稻米", COAL: "煤", NITER: "硝石", WHEAT: "小麦",
+  DEER: "鹿", ALUMINUM: "铝", URANIUM: "铀", OIL: "石油", SILK: "丝绸", SALT: "盐", SHEEP: "羊", CATTLE: "牛",
+  COTTON: "棉花", TURTLES: "海龟", PEARLS: "珍珠", SILVER: "银", CRABS: "螃蟹", TRUFFLES: "松露", CITRUS: "柑橘",
+  WINE: "葡萄酒", TEA: "茶", FURS: "毛皮", MERCURY: "水银", GYPSUM: "石膏", COPPER: "铜", SUGAR: "糖", MARBLE: "大理石",
+  JADE: "玉", INCENSE: "香料", DYES: "染料", WHALES: "鲸", SPICES: "香辛料", BANANAS: "香蕉" };
+const CN = { Handan: "邯郸", Jinyang: "晋阳", Xianyang: "咸阳", Luoyang: "洛阳", Xiangyang: "襄阳", Chengdu: "成都",
+  Hefei: "合肥", Anyi: "安邑", Ji: "蓟", Linzi: "临淄", Xuzhou: "徐州", Chongqing: "江州", Nanjing: "南京", Kuaiji: "会稽",
+  Hanzhong: "汉中", Jiangling: "江陵", Daliang: "大梁", Zhongshan: "中山", Wuchang: "武昌" };
+const NOFEAT = "~cMS";
+const SQ = Math.sqrt(3);
+
+document.getElementById("ver").textContent = `${D.ver} · ${W}×${H} · 底图 ${D.base}`;
+const baseT = (x, y) => D.T[H - 1 - y][x];
+const baseF = (x, y) => D.F[H - 1 - y][x];
+const key = (x, y) => `${x}-${y}`;
+const startAt = new Map(D.starts.map(([n, x, y]) => [key(x, y), CN[n] || n]));
+
+// ---------- 改动 ----------
+const edits = new Map();     // 数据库里的改动
+const local = new Map();     // 还没写进数据库的改动（null = 删除）
+function editOf(k) { return local.has(k) ? local.get(k) : edits.get(k) || null; }
+function cell(x, y) {
+  const e = editOf(key(x, y));
+  return e ? { t: e.t, f: e.f } : { t: baseT(x, y), f: baseF(x, y) };
+}
+function isChange(e) {
+  return e && (e.t !== baseT(e.x, e.y) || e.f !== baseF(e.x, e.y) || (e.note || "").trim());
+}
+const undoStack = [];
+let stroke = null;
+
+function setCell(x, y, t, f, note) {
+  const k = key(x, y);
+  const prev = editOf(k);
+  const e = { x, y, t, f, bt: baseT(x, y), bf: baseF(x, y), note: note ?? (prev?.note || ""), at: Date.now(), base: D.base };
+  const next = isChange(e) ? e : null;
+  if (JSON.stringify(prev && { t: prev.t, f: prev.f, n: prev.note || "" }) === JSON.stringify(next && { t: next.t, f: next.f, n: next.note || "" })) return;
+  if (stroke) { if (!stroke.has(k)) stroke.set(k, prev); } else undoStack.push(new Map([[k, prev]]));
+  local.set(k, next);
+  queueWrite(k);
+  draw(); renderList(); if (sel && sel.x === x && sel.y === y) renderInfo();
+}
+
+function paint(x, y) {
+  const c = cell(x, y);
+  if (brush.kind === "reset") { setCell(x, y, baseT(x, y), baseF(x, y)); return; }
+  if (brush.kind === "t") {
+    let f = c.f;
+    if (NOFEAT.includes(brush.v)) f = ".";
+    if (f === "m" && "GPD".includes(brush.v)) f = ".";
+    setCell(x, y, brush.v, f);
+  } else {
+    if (brush.v !== "." && NOFEAT.includes(c.t)) { toast("山和水上不能放地貌"); return; }
+    if (brush.v === "m" && "GPD".includes(c.t)) { toast("沼泽只能放在平地上"); return; }
+    setCell(x, y, c.t, brush.v);
+  }
+}
+
+function undo() {
+  const step = undoStack.pop();
+  if (!step) return;
+  for (const [k, prev] of step) { local.set(k, prev && isChange(prev) ? prev : null); queueWrite(k); }
+  draw(); renderList(); renderInfo();
+}
+
+// ---------- 数据库 ----------
+let db = null, coll = null;
+const dirty = new Set();
+let flushing = false, flushTimer = null;
+const statusEl = document.getElementById("status");
+function status(s, text) { statusEl.dataset.s = s; statusEl.textContent = text; }
+
+function queueWrite(k) {
+  dirty.add(k);
+  if (!coll) return;
+  status("busy", "保存中…");
+  clearTimeout(flushTimer);
+  flushTimer = setTimeout(flush, 350);
+}
+async function flush() {
+  if (flushing || !coll) return;
+  flushing = true;
+  try {
+    while (dirty.size) {
+      const k = dirty.values().next().value;
+      dirty.delete(k);
+      const e = local.get(k);
+      try {
+        if (e) await coll.doc(k).set(e); else await coll.doc(k).delete();
+      } catch (err) {
+        if (err && err.code === "unavailable") { await new Promise(r => setTimeout(r, 500 + Math.random() * 500)); dirty.add(k); continue; }
+        status("off", err && err.code === "invalid_argument" ? "没有写入权限，改动只在本页" : "保存失败：" + (err && err.message || err));
+        flushing = false; return;
+      }
+    }
+    status("ok", "已保存");
+  } finally { flushing = false; }
+}
+
+(async () => {
+  const timer = setTimeout(() => { if (!coll) status("off", "连不上数据库，改动只在本页，用「复制改动清单」发给 Claude"); }, 10000);
+  try { db = await window.claude?.use?.("db"); } catch { db = null; }
+  if (!db) { clearTimeout(timer); status("off", "连不上数据库，改动只在本页，用「复制改动清单」发给 Claude"); return; }
+  coll = db.collection("edits");
+  coll.onSnapshot(snap => {
+    clearTimeout(timer);
+    edits.clear();
+    for (const d of snap.docs) { const v = d.data(); if (v && Number.isInteger(v.x) && Number.isInteger(v.y)) edits.set(d.id, v); }
+    // 已经写进数据库的本地改动不再单独保存
+    for (const [k, v] of local) {
+      if (dirty.has(k)) continue;
+      const s = edits.get(k) || null;
+      if (JSON.stringify(s && [s.t, s.f, s.note || ""]) === JSON.stringify(v && [v.t, v.f, v.note || ""])) local.delete(k);
+    }
+    if (!snap.metadata.fromCache && !dirty.size && !flushing) status("ok", "已保存");
+    draw(); renderList(); if (document.activeElement?.id !== "note") renderInfo();
+  }, err => { clearTimeout(timer); status("off", "数据库断开，改动只在本页"); });
+  if (dirty.size) queueWrite(dirty.values().next().value);
+})();
+
+// ---------- 画布 ----------
+const cv = document.getElementById("cv"), ctx = cv.getContext("2d"), wrap = document.getElementById("mapwrap");
+let R = 10, ox = 20, oy = 20, dpr = 1;
+const opt = { orig: false, res: true, pass: true, river: true };
+function center(x, y) { return [ox + R * SQ * (x + 0.5 * (y & 1)) + R * SQ / 2, oy + R * 1.5 * (H - 1 - y) + R]; }
+function corner(cx, cy, i) { const a = Math.PI / 180 * (60 * i - 30); return [cx + R * Math.cos(a), cy + R * Math.sin(a)]; }
+function hexPath(cx, cy) {
+  ctx.beginPath();
+  for (let i = 0; i < 6; i++) { const [px, py] = corner(cx, cy, i); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
+  ctx.closePath();
+}
+// 方向对应的边（画面坐标，角 0 右上，顺时针）
+const EDGE = { E: [0, 1], SE: [1, 2], SW: [2, 3], W: [3, 4], NW: [4, 5], NE: [5, 0] };
+function dirOf(x, y, x2, y2) {
+  const n = (y & 1)
+    ? { E: [1, 0], W: [-1, 0], NE: [1, 1], NW: [0, 1], SE: [1, -1], SW: [0, -1] }
+    : { E: [1, 0], W: [-1, 0], NE: [0, 1], NW: [-1, 1], SE: [0, -1], SW: [-1, -1] };
+  for (const d in n) if (x + n[d][0] === x2 && y + n[d][1] === y2) return d;
+  return null;
+}
+function edgeLine(x, y, d) {
+  const [cx, cy] = center(x, y), [a, b] = EDGE[d];
+  const p = corner(cx, cy, a), q = corner(cx, cy, b);
+  ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]);
+}
+function resize() {
+  dpr = window.devicePixelRatio || 1;
+  cv.width = Math.round(wrap.clientWidth * dpr); cv.height = Math.round(wrap.clientHeight * dpr);
+  draw();
+}
+function fit() {
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  R = Math.max(3, Math.min((w - 24) / (SQ * (W + 0.5)), (h - 24) / (1.5 * H + 0.5)));
+  ox = (w - R * SQ * (W + 0.5)) / 2; oy = (h - (R * 1.5 * (H - 1) + 2 * R)) / 2;
+  draw();
+}
+let raf = 0;
+function draw() { if (!raf) raf = requestAnimationFrame(() => { raf = 0; render(); }); }
+function render() {
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--canvas").trim() || "#1c2128";
+  ctx.fillRect(0, 0, cv.width, cv.height);
+  const vw = wrap.clientWidth, vh = wrap.clientHeight;
+  const vis = (cx, cy) => cx > -R * 2 && cy > -R * 2 && cx < vw + R * 2 && cy < vh + R * 2;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const [cx, cy] = center(x, y);
+    if (!vis(cx, cy)) continue;
+    const c = opt.orig ? { t: baseT(x, y), f: baseF(x, y) } : cell(x, y);
+    hexPath(cx, cy);
+    ctx.fillStyle = TERR[c.t][1]; ctx.fill();
+    if (R >= 7) { ctx.strokeStyle = "rgba(0,0,0,.35)"; ctx.lineWidth = 0.6; ctx.stroke(); }
+    if (c.t === "M" || c.t === "S") {
+      ctx.fillStyle = c.t === "M" ? "#50463e" : "#aab0ba";
+      ctx.beginPath(); ctx.moveTo(cx - R * .55, cy + R * .4); ctx.lineTo(cx, cy - R * .55); ctx.lineTo(cx + R * .55, cy + R * .4); ctx.fill();
+    } else if ("GPD".includes(c.t)) {
+      ctx.strokeStyle = "#32321e"; ctx.lineWidth = Math.max(1, R / 8);
+      ctx.beginPath(); ctx.arc(cx, cy + R * .45, R * .5, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke();
+    }
+    if (FEAT[c.f] && FEAT[c.f][1]) {
+      ctx.fillStyle = FEAT[c.f][1]; const rr = R * .18;
+      for (const [dx, dy] of [[-.35, .1], [.3, .2], [0, -.3]]) { ctx.beginPath(); ctx.arc(cx + dx * R, cy + dy * R, rr, 0, 7); ctx.fill(); }
+    }
+    if (opt.res && D.res[`${x},${y}`] && R >= 5) {
+      ctx.strokeStyle = "#ffffff"; ctx.lineWidth = Math.max(1, R / 10);
+      ctx.beginPath(); ctx.arc(cx + R * .42, cy - R * .38, R * .16, 0, 7); ctx.stroke();
+    }
+  }
+  if (opt.river) {
+    ctx.strokeStyle = "#3c82e6"; ctx.lineWidth = Math.max(1.5, R / 4); ctx.lineCap = "round"; ctx.beginPath();
+    for (const [x, y, x2, y2] of D.rivers) { const d = dirOf(x, y, x2, y2); if (d) edgeLine(x, y, d); }
+    for (const [x, y] of D.yellow) { edgeLine(x, y, "SE"); edgeLine(x, y, "SW"); }
+    ctx.stroke();
+  }
+  // 改动描边
+  if (!opt.orig) {
+    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--mark").trim() || "#e0a21b";
+    ctx.lineWidth = Math.max(1.5, R / 5);
+    for (const k of new Set([...edits.keys(), ...local.keys()])) {
+      const e = editOf(k); if (!isChange(e)) continue;
+      const [cx, cy] = center(e.x, e.y); hexPath(cx, cy); ctx.stroke();
+      if (e.note && R >= 6) { ctx.fillStyle = ctx.strokeStyle; ctx.beginPath(); ctx.arc(cx - R * .45, cy - R * .4, R * .14, 0, 7); ctx.fill(); }
+    }
+  }
+  if (sel) { const [cx, cy] = center(sel.x, sel.y); hexPath(cx, cy); ctx.strokeStyle = "#ffffff"; ctx.lineWidth = Math.max(2, R / 4); ctx.stroke(); }
+  const fs = Math.max(11, Math.min(20, R * 1.1));
+  ctx.textAlign = "center"; ctx.textBaseline = "bottom"; ctx.lineJoin = "round";
+  if (opt.pass && R >= 6) {
+    ctx.font = `600 ${Math.max(10, fs * .8)}px ${getComputedStyle(document.body).fontFamily}`;
+    for (const [n, x, y] of D.passes) {
+      const [cx, cy] = center(x, y);
+      ctx.fillStyle = "#f2e6c8"; ctx.beginPath(); ctx.moveTo(cx, cy - R * .4); ctx.lineTo(cx + R * .3, cy); ctx.lineTo(cx, cy + R * .4); ctx.lineTo(cx - R * .3, cy); ctx.fill();
+      ctx.strokeStyle = "rgba(0,0,0,.8)"; ctx.lineWidth = 3; ctx.strokeText(n, cx, cy - R * .45); ctx.fillText(n, cx, cy - R * .45);
+    }
+  }
+  ctx.font = `700 ${fs}px ${getComputedStyle(document.body).fontFamily}`;
+  for (const [n, x, y] of D.starts) {
+    const [cx, cy] = center(x, y);
+    ctx.fillStyle = "#e0402e"; star(cx, cy, R * .55);
+    ctx.strokeStyle = "rgba(0,0,0,.85)"; ctx.lineWidth = 3.5; ctx.fillStyle = "#ffffff";
+    ctx.strokeText(CN[n] || n, cx, cy - R * .6); ctx.fillText(CN[n] || n, cx, cy - R * .6);
+  }
+  // 坐标刻度
+  ctx.font = `500 11px ${getComputedStyle(document.documentElement).getPropertyValue("--mono")}`;
+  ctx.fillStyle = "rgba(230,235,232,.75)"; ctx.textBaseline = "top";
+  for (let x = 0; x < W; x += 5) { const [cx] = center(x, H - 1); ctx.fillText(x, cx, Math.max(2, oy - 14)); }
+  ctx.textAlign = "right"; ctx.textBaseline = "middle";
+  for (let y = 0; y < H; y += 5) { const [, cy] = center(0, y); ctx.fillText(y, Math.max(22, ox - 4), cy); }
+}
+function star(cx, cy, r) {
+  ctx.beginPath();
+  for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * .45 : r; ctx.lineTo(cx + rr * Math.cos(a), cy + rr * Math.sin(a)); }
+  ctx.closePath(); ctx.fill();
+}
+function hit(px, py) {
+  const ry = Math.round((py - oy - R) / (1.5 * R)), y0 = H - 1 - ry;
+  let best = null, bd = Infinity;
+  for (let y = y0 - 1; y <= y0 + 1; y++) {
+    if (y < 0 || y >= H) continue;
+    const x0 = Math.round((px - ox - R * SQ / 2) / (R * SQ) - 0.5 * (y & 1));
+    for (let x = x0 - 1; x <= x0 + 1; x++) {
+      if (x < 0 || x >= W) continue;
+      const [cx, cy] = center(x, y), d = (cx - px) ** 2 + (cy - py) ** 2;
+      if (d < bd) { bd = d; best = { x, y }; }
+    }
+  }
+  return best && bd <= R * R ? best : null;
+}
+
+// ---------- 交互 ----------
+let mode = "paint", brush = { kind: "t", v: "G" }, sel = null, space = false;
+let drag = null;
+const hud = document.getElementById("hud");
+function pos(ev) { const r = cv.getBoundingClientRect(); return [ev.clientX - r.left, ev.clientY - r.top]; }
+cv.addEventListener("contextmenu", ev => ev.preventDefault());
+cv.addEventListener("pointerdown", ev => {
+  cv.setPointerCapture(ev.pointerId);
+  const [px, py] = pos(ev);
+  const pan = mode === "pan" || space || ev.button === 1 || ev.button === 2;
+  drag = { pan, sx: px, sy: py, ox, oy, moved: false };
+  if (!pan) { stroke = new Map(); const h = hit(px, py); if (h) { sel = h; paint(h.x, h.y); renderInfo(); } }
+});
+cv.addEventListener("pointermove", ev => {
+  const [px, py] = pos(ev);
+  const h = hit(px, py);
+  hud.textContent = h ? hudText(h.x, h.y) : "地图外";
+  if (!drag) return;
+  if (Math.abs(px - drag.sx) + Math.abs(py - drag.sy) > 4) drag.moved = true;
+  if (drag.pan) { ox = drag.ox + px - drag.sx; oy = drag.oy + py - drag.sy; draw(); }
+  else if (h) paint(h.x, h.y);
+});
+function endDrag(ev) {
+  if (!drag) return;
+  if (drag.pan && !drag.moved) { const h = hit(...pos(ev)); sel = h; renderInfo(); draw(); }
+  if (stroke && stroke.size) undoStack.push(stroke);
+  stroke = null; drag = null;
+}
+cv.addEventListener("pointerup", endDrag);
+cv.addEventListener("pointercancel", endDrag);
+cv.addEventListener("wheel", ev => { ev.preventDefault(); const [px, py] = pos(ev); zoom(ev.deltaY < 0 ? 1.15 : 1 / 1.15, px, py); }, { passive: false });
+function zoom(k, px = wrap.clientWidth / 2, py = wrap.clientHeight / 2) {
+  const nr = Math.max(3, Math.min(48, R * k)); k = nr / R;
+  ox = px - (px - ox) * k; oy = py - (py - oy) * k; R = nr; draw();
+}
+document.getElementById("zin").onclick = () => zoom(1.3);
+document.getElementById("zout").onclick = () => zoom(1 / 1.3);
+document.getElementById("zfit").onclick = fit;
+window.addEventListener("keydown", ev => {
+  if (ev.target.tagName === "TEXTAREA") return;
+  if (ev.code === "Space") { space = true; ev.preventDefault(); }
+  if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "z") { ev.preventDefault(); undo(); }
+});
+window.addEventListener("keyup", ev => { if (ev.code === "Space") space = false; });
+document.getElementById("undo").onclick = undo;
+function setMode(m) {
+  mode = m;
+  document.getElementById("m-paint").setAttribute("aria-pressed", m === "paint");
+  document.getElementById("m-pan").setAttribute("aria-pressed", m === "pan");
+}
+document.getElementById("m-paint").onclick = () => setMode("paint");
+document.getElementById("m-pan").onclick = () => setMode("pan");
+for (const id of ["orig", "res", "pass", "river"]) document.getElementById("o-" + id).onchange = ev => { opt[id] = ev.target.checked; draw(); };
+
+const brushBtns = [];
+function addBrush(host, kind, v, label, color) {
+  const b = document.createElement("button");
+  b.className = "brush";
+  b.innerHTML = (color ? `<span class="sw" style="background:${color}"></span>` : "") + label;
+  b.onclick = () => { brush = { kind, v }; setMode("paint"); for (const o of brushBtns) o.setAttribute("aria-pressed", o === b); };
+  b.setAttribute("aria-pressed", kind === brush.kind && v === brush.v);
+  brushBtns.push(b); host.appendChild(b);
+}
+for (const t of "gpdGPDMSc~") addBrush(document.getElementById("b-terr"), "t", t, TERR[t][0], TERR[t][1]);
+for (const f of "fjm.") addBrush(document.getElementById("b-feat"), "f", f, FEAT[f][0], FEAT[f][1]);
+addBrush(document.getElementById("b-feat"), "reset", null, "恢复原样", null);
+
+function desc(t, f) { return TERR[t][0] + (f !== "." ? "·" + FEAT[f][0] : ""); }
+function hudText(x, y) {
+  const c = cell(x, y), r = D.res[`${x},${y}`], s = startAt.get(key(x, y));
+  return `(${x}, ${y})  ${desc(c.t, c.f)}${r ? "  " + (RES[r] || r) : ""}${s ? "  出生点 " + s : ""}`;
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+function renderInfo() {
+  const el = document.getElementById("info");
+  if (!sel) { el.className = "empty"; el.textContent = "点一个格子查看，或者给它写备注（比如“这里开个口”）。"; return; }
+  const { x, y } = sel, c = cell(x, y), e = editOf(key(x, y)), r = D.res[`${x},${y}`], s = startAt.get(key(x, y));
+  const changed = c.t !== baseT(x, y) || c.f !== baseF(x, y);
+  let warn = "";
+  if (r && NOFEAT.includes(c.t)) warn = `<div class="warn">这格有资源「${RES[r] || r}」，改成山或水后资源会失效，写回时会挪到相邻格。</div>`;
+  if (s && changed) warn += `<div class="warn">这是${s}的出生点，写回时出生格必须是平地。</div>`;
+  el.className = "";
+  el.innerHTML = `<div><span class="k">(${x}, ${y})</span> ${esc(desc(c.t, c.f))}${s ? " · 出生点 " + esc(s) : ""}</div>
+    ${changed ? `<div>原来：${esc(desc(baseT(x, y), baseF(x, y)))}</div>` : ""}
+    ${r ? `<div>资源：${esc(RES[r] || r)}</div>` : ""}${warn}
+    <label for="note" class="hint">备注（给 Claude 的说明）</label>
+    <textarea id="note" placeholder="比如：这里开个口 / 把这片山往东挪一格">${esc(e?.note || "")}</textarea>
+    <div class="row" style="margin-top:6px"><button id="note-save">保存备注</button>${changed ? '<button id="cell-reset">恢复这格</button>' : ""}</div>`;
+  document.getElementById("note-save").onclick = () => { const n = document.getElementById("note").value.trim(); setCell(x, y, c.t, c.f, n); toast(n ? "备注已保存" : "备注已清空"); };
+  const rb = document.getElementById("cell-reset");
+  if (rb) rb.onclick = () => setCell(x, y, baseT(x, y), baseF(x, y));
+}
+function allChanges() {
+  const out = [];
+  for (const k of new Set([...edits.keys(), ...local.keys()])) { const e = editOf(k); if (isChange(e)) out.push(e); }
+  return out.sort((a, b) => (b.at || 0) - (a.at || 0));
+}
+function renderList() {
+  const list = allChanges(), el = document.getElementById("list");
+  document.getElementById("list-h").textContent = `改动清单 · ${list.length} 格`;
+  if (!list.length) { el.innerHTML = '<div class="empty">还没有改动。选一种地形，在地图上点或涂。</div>'; return; }
+  el.innerHTML = "";
+  for (const e of list) {
+    const d = document.createElement("div"); d.className = "item";
+    const same = e.t === baseT(e.x, e.y) && e.f === baseF(e.x, e.y);
+    d.innerHTML = `<span class="xy">(${e.x}, ${e.y})</span><span class="what">${same ? "只写了备注" : esc(desc(baseT(e.x, e.y), baseF(e.x, e.y)) + " → " + desc(e.t, e.f))}</span><button>撤销</button>` +
+      (e.note ? `<span class="note">${esc(e.note)}</span>` : "");
+    d.querySelector(".xy").onclick = () => { sel = { x: e.x, y: e.y }; const [cx, cy] = center(e.x, e.y); ox += wrap.clientWidth / 2 - cx; oy += wrap.clientHeight / 2 - cy; if (R < 14) zoom(14 / R); renderInfo(); draw(); };
+    d.querySelector("button").onclick = () => setCell(e.x, e.y, baseT(e.x, e.y), baseF(e.x, e.y), "");
+    el.appendChild(d);
+  }
+}
+document.getElementById("copy").onclick = async () => {
+  const text = JSON.stringify({ base: D.base, edits: allChanges().map(({ x, y, t, f, bt, bf, note }) => ({ x, y, t, f, bt, bf, note })) });
+  try { await navigator.clipboard.writeText(text); toast("已复制，可以直接粘贴给 Claude"); }
+  catch { const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); toast("复制被拦住了，已选中文字，请按 Ctrl+C"); setTimeout(() => ta.remove(), 8000); }
+};
+let toastTimer;
+function toast(msg) { hud.textContent = msg; clearTimeout(toastTimer); }
+
+let fitted = false;
+new ResizeObserver(() => { resize(); if (!fitted && wrap.clientWidth) { fitted = true; fit(); } }).observe(wrap);
+renderList();
+</script>
