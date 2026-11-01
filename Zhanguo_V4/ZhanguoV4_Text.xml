@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameData>
+	<LocalizedText>
+		<Row Tag="LOC_ZHANGUOV4_MOD_NAME" Language="zh_Hans_CN"><Text>战国七雄地图</Text></Row>
+		<Row Tag="LOC_ZHANGUOV4_MOD_NAME" Language="en_US"><Text>Warring States China Map</Text></Row>
+		<Row Tag="LOC_ZHANGUOV4_MOD_TEASER" Language="zh_Hans_CN"><Text>标准尺寸的战国地图，适合 2~5 人对战。</Text></Row>
+		<Row Tag="LOC_ZHANGUOV4_MOD_TEASER" Language="en_US"><Text>Standard-size Warring States China for 2-5 player PvP.</Text></Row>
+		<Row Tag="LOC_ZHANGUOV4_MOD_DESC" Language="zh_Hans_CN"><Text>固定地形的战国中国地图（标准 84x54），出生点按 2~5 人对战调平。黄河、渭水、长江、淮河、岷江用海岸格表示，关隘由山脉缺口构成。</Text></Row>
+		<Row Tag="LOC_ZHANGUOV4_MOD_DESC" Language="en_US"><Text>Fixed-terrain Warring States China (Standard, 84x54), starts balanced for 2-5 player PvP. Major rivers are coast tiles; passes are gaps in mountain ranges.</Text></Row>
+		<Row Tag="LOC_MAP_ZHANGUOV4_NAME" Language="zh_Hans_CN"><Text>战国七雄 V4（标准）</Text></Row>
+		<Row Tag="LOC_MAP_ZHANGUOV4_NAME" Language="en_US"><Text>Warring States China V4 (Standard)</Text></Row>
+		<Row Tag="LOC_MAP_ZHANGUOV4_DESC" Language="zh_Hans_CN"><Text>秦、楚、齐、燕、韩、赵、魏与周。关中四塞，蜀道，三峡夷陵，太行八陉。标准尺寸，出生点按 2~5 人对战调平，可加人机占位。（V4.0 · 2026-11-01）</Text></Row>
+		<Row Tag="LOC_MAP_ZHANGUOV4_DESC" Language="en_US"><Text>Qin, Chu, Qi, Yan, Han, Zhao, Wei and Zhou, with the famous passes of ancient China. Standard size, starts balanced for 2-5 player PvP; fill the rest with AI. (V4.0, 2026-11-01)</Text></Row>
+			<Replace Tag="LOC_BUILDING_PANAMA_CANAL_NAME" Language="zh_Hans_CN"><Text>京杭大运河</Text></Replace>
+		<Replace Tag="LOC_BUILDING_PANAMA_CANAL_NAME" Language="zh_Hant_TW"><Text>京杭大運河</Text></Replace>
+		<Replace Tag="LOC_BUILDING_PANAMA_CANAL_NAME" Language="en_US"><Text>Grand Canal</Text></Replace>
+		<Replace Tag="LOC_BUILDING_PANAMA_CANAL_DESCRIPTION" Language="zh_Hans_CN"><Text>完工后自动在两侧建造 1 到 2 个运河区，舰船可以从这一格直接穿过。穿过它的贸易路线能放大目的地各区域的金币收益。+10 金币。（规则与巴拿马运河相同，在本地图中是京杭大运河。）</Text></Replace>
+		<Replace Tag="LOC_BUILDING_PANAMA_CANAL_DESCRIPTION" Language="en_US"><Text>On completion 1 or 2 adjacent Canal districts are built automatically and ships can cross this tile. Trade routes through it multiply the Gold from districts at their destination. +10 Gold. (Same rules as the Panama Canal; on this map it is the Grand Canal.)</Text></Replace>
+</LocalizedText>
+</GameData>

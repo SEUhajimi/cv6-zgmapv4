@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameInfo>
+	<MapSizes>
+		<Row Domain="ZhanguoV4Sizes" MapSizeType="MAPSIZE_STANDARD" Name="LOC_MAPSIZE_STANDARD_NAME" Description="LOC_MAPSIZE_STANDARD_DESCRIPTION" MinPlayers="2" MaxPlayers="12" DefaultPlayers="6" MinCityStates="0" MaxCityStates="12" DefaultCityStates="8" SortIndex="40"/>
+	</MapSizes>
+	<MapDomainOverrides>
+		<Row Map="{f6b2569b-327f-4e5f-93b4-7be11649accb}ZhanguoV4.lua" ParameterId="MapSize" Domain="ZhanguoV4Sizes"/>
+	</MapDomainOverrides>
+</GameInfo>

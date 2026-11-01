@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 城市历史地名：在城址附近建城时改用这里的名字（ZhanguoV4_Gameplay.lua） -->
+<GameData>
+	<LocalizedText>
+		<Row Tag="LOC_ZHANGUO_CITY_HANDAN" Language="zh_Hans_CN"><Text>邯郸</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_HANDAN" Language="en_US"><Text>Handan</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JINYANG" Language="zh_Hans_CN"><Text>晋阳</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JINYANG" Language="en_US"><Text>Jinyang</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_XIANYANG" Language="zh_Hans_CN"><Text>咸阳</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_XIANYANG" Language="en_US"><Text>Xianyang</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LUOYANG" Language="zh_Hans_CN"><Text>洛阳</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LUOYANG" Language="en_US"><Text>Luoyang</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_XIANGYANG" Language="zh_Hans_CN"><Text>襄阳</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_XIANGYANG" Language="en_US"><Text>Xiangyang</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_CHENGDU" Language="zh_Hans_CN"><Text>成都</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_CHENGDU" Language="en_US"><Text>Chengdu</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_HEFEI" Language="zh_Hans_CN"><Text>合肥</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_HEFEI" Language="en_US"><Text>Hefei</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_ANYI" Language="zh_Hans_CN"><Text>安邑</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_ANYI" Language="en_US"><Text>Anyi</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JI" Language="zh_Hans_CN"><Text>蓟</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JI" Language="en_US"><Text>Ji</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LINZI" Language="zh_Hans_CN"><Text>临淄</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LINZI" Language="en_US"><Text>Linzi</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_PENGCHENG" Language="zh_Hans_CN"><Text>彭城</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_PENGCHENG" Language="en_US"><Text>Pengcheng</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIANGZHOU" Language="zh_Hans_CN"><Text>江州</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIANGZHOU" Language="en_US"><Text>Jiangzhou</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JINLING" Language="zh_Hans_CN"><Text>金陵</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JINLING" Language="en_US"><Text>Jinling</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_KUAIJI" Language="zh_Hans_CN"><Text>会稽</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_KUAIJI" Language="en_US"><Text>Kuaiji</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_HANZHONG" Language="zh_Hans_CN"><Text>汉中</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_HANZHONG" Language="en_US"><Text>Hanzhong</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_DALIANG" Language="zh_Hans_CN"><Text>大梁</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_DALIANG" Language="en_US"><Text>Daliang</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_ZHONGSHAN" Language="zh_Hans_CN"><Text>中山</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_ZHONGSHAN" Language="en_US"><Text>Zhongshan</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_E" Language="zh_Hans_CN"><Text>鄂</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_E" Language="en_US"><Text>E</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_TONGGUAN" Language="zh_Hans_CN"><Text>潼关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_TONGGUAN" Language="en_US"><Text>Tongguan</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_HANGUGUAN" Language="zh_Hans_CN"><Text>函谷关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_HANGUGUAN" Language="en_US"><Text>Hangu Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_BAOXIEDAO" Language="zh_Hans_CN"><Text>褒斜道</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_BAOXIEDAO" Language="en_US"><Text>Baoxie Road</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_QISHANDAO" Language="zh_Hans_CN"><Text>祁山道</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_QISHANDAO" Language="en_US"><Text>Qishan Road</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_SHANGWUDAO" Language="zh_Hans_CN"><Text>商於道</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_SHANGWUDAO" Language="en_US"><Text>Shangwu Road</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_WUGUAN" Language="zh_Hans_CN"><Text>武关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_WUGUAN" Language="en_US"><Text>Wu Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_SANGUAN" Language="zh_Hans_CN"><Text>散关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_SANGUAN" Language="en_US"><Text>San Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_SANGUANKOU" Language="zh_Hans_CN"><Text>三关口</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_SANGUANKOU" Language="en_US"><Text>Sanguankou</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_WUSHAOLING" Language="zh_Hans_CN"><Text>乌鞘岭</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_WUSHAOLING" Language="en_US"><Text>Wushaoling</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_ZHIDAO" Language="zh_Hans_CN"><Text>直道</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_ZHIDAO" Language="en_US"><Text>Zhidao</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_XIAOGUAN" Language="zh_Hans_CN"><Text>萧关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_XIAOGUAN" Language="en_US"><Text>Xiao Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LONGQUANYI" Language="zh_Hans_CN"><Text>龙泉驿</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LONGQUANYI" Language="en_US"><Text>Longquanyi</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIANYANG" Language="zh_Hans_CN"><Text>简阳</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIANYANG" Language="en_US"><Text>Jianyang</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIANMENGUAN" Language="zh_Hans_CN"><Text>剑门关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIANMENGUAN" Language="en_US"><Text>Jianmen Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_MICANGDAO" Language="zh_Hans_CN"><Text>米仓道</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_MICANGDAO" Language="en_US"><Text>Micang Road</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_BAIDICHENG" Language="zh_Hans_CN"><Text>白帝城</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_BAIDICHENG" Language="en_US"><Text>Baidicheng</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_QUTANGGUAN" Language="zh_Hans_CN"><Text>瞿塘关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_QUTANGGUAN" Language="en_US"><Text>Qutang Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YINPING" Language="zh_Hans_CN"><Text>阴平</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YINPING" Language="en_US"><Text>Yinping</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_QINGMUGUAN" Language="zh_Hans_CN"><Text>青木关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_QINGMUGUAN" Language="en_US"><Text>Qingmu Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_TONGCHENGKOU" Language="zh_Hans_CN"><Text>通城口</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_TONGCHENGKOU" Language="en_US"><Text>Tongchengkou</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_PINGJINGGUAN" Language="zh_Hans_CN"><Text>平靖关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_PINGJINGGUAN" Language="en_US"><Text>Pingjing Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_WUSHENGGUAN" Language="zh_Hans_CN"><Text>武胜关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_WUSHENGGUAN" Language="en_US"><Text>Wusheng Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIULIGUAN" Language="zh_Hans_CN"><Text>九里关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIULIGUAN" Language="en_US"><Text>Jiuli Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YOUSHUIKOU" Language="zh_Hans_CN"><Text>酉水口</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YOUSHUIKOU" Language="en_US"><Text>Youshuikou</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_HULAOGUAN" Language="zh_Hans_CN"><Text>虎牢关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_HULAOGUAN" Language="en_US"><Text>Hulao Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_ZHIGUAN" Language="zh_Hans_CN"><Text>轵关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_ZHIGUAN" Language="en_US"><Text>Zhi Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_PUJINGUAN" Language="zh_Hans_CN"><Text>蒲津关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_PUJINGUAN" Language="en_US"><Text>Pujin Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_GAOQUE" Language="zh_Hans_CN"><Text>高阙</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_GAOQUE" Language="en_US"><Text>Gaoque</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIUYUAN" Language="zh_Hans_CN"><Text>九原塞</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIUYUAN" Language="en_US"><Text>Jiuyuan</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JINGXINGGUAN" Language="zh_Hans_CN"><Text>井陉关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JINGXINGGUAN" Language="en_US"><Text>Jingxing Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_FEIHUDAO" Language="zh_Hans_CN"><Text>飞狐道</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_FEIHUDAO" Language="en_US"><Text>Feihu Road</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YANMENGUAN" Language="zh_Hans_CN"><Text>雁门关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YANMENGUAN" Language="en_US"><Text>Yanmen Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JUYONGGUAN" Language="zh_Hans_CN"><Text>居庸关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JUYONGGUAN" Language="en_US"><Text>Juyong Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_GUBEIKOU" Language="zh_Hans_CN"><Text>古北口</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_GUBEIKOU" Language="en_US"><Text>Gubeikou</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_MULINGGUAN" Language="zh_Hans_CN"><Text>穆陵关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_MULINGGUAN" Language="en_US"><Text>Muling Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_TAIHANGXING" Language="zh_Hans_CN"><Text>太行陉</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_TAIHANGXING" Language="en_US"><Text>Taihang Xing</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_FUKOUXING" Language="zh_Hans_CN"><Text>滏口陉</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_FUKOUXING" Language="en_US"><Text>Fukou Xing</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_MENGJIN" Language="zh_Hans_CN"><Text>孟津</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_MENGJIN" Language="en_US"><Text>Mengjin</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_FANGCHENG" Language="zh_Hans_CN"><Text>方城</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_FANGCHENG" Language="en_US"><Text>Fangcheng</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LUYANGGUAN" Language="zh_Hans_CN"><Text>鲁阳关</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LUYANGGUAN" Language="en_US"><Text>Luyang Pass</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YONG" Language="zh_Hans_CN"><Text>雍</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YONG" Language="en_US"><Text>Yong</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LIYANG" Language="zh_Hans_CN"><Text>栎阳</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LIYANG" Language="en_US"><Text>Yueyang</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LANTIAN" Language="zh_Hans_CN"><Text>蓝田</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LANTIAN" Language="en_US"><Text>Lantian</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_DIDAO" Language="zh_Hans_CN"><Text>狄道</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_DIDAO" Language="en_US"><Text>Didao</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_TIANSHUI" Language="zh_Hans_CN"><Text>天水</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_TIANSHUI" Language="en_US"><Text>Tianshui</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_SHANGJUN" Language="zh_Hans_CN"><Text>上郡</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_SHANGJUN" Language="en_US"><Text>Shangjun</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LINQIONG" Language="zh_Hans_CN"><Text>临邛</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LINQIONG" Language="en_US"><Text>Linqiong</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LANGZHONG" Language="zh_Hans_CN"><Text>阆中</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LANGZHONG" Language="en_US"><Text>Langzhong</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_BODAO" Language="zh_Hans_CN"><Text>僰道</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_BODAO" Language="en_US"><Text>Bodao</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_ZHI" Language="zh_Hans_CN"><Text>枳</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_ZHI" Language="en_US"><Text>Zhi</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YILING" Language="zh_Hans_CN"><Text>夷陵</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YILING" Language="en_US"><Text>Yiling</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YING" Language="zh_Hans_CN"><Text>郢</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YING" Language="en_US"><Text>Ying</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_WAN" Language="zh_Hans_CN"><Text>宛</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_WAN" Language="en_US"><Text>Wan</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YAN" Language="zh_Hans_CN"><Text>鄢</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YAN" Language="en_US"><Text>Yan</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_XIAKOU" Language="zh_Hans_CN"><Text>夏口</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_XIAKOU" Language="en_US"><Text>Xiakou</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_CHEN" Language="zh_Hans_CN"><Text>陈</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_CHEN" Language="en_US"><Text>Chen</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_SHOUCHUN" Language="zh_Hans_CN"><Text>寿春</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_SHOUCHUN" Language="en_US"><Text>Shouchun</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIANGPU" Language="zh_Hans_CN"><Text>江浦</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIANGPU" Language="en_US"><Text>Jiangpu</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_RUXUWU" Language="zh_Hans_CN"><Text>濡须坞</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_RUXUWU" Language="en_US"><Text>Ruxuwu</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_RUXUKOU" Language="zh_Hans_CN"><Text>濡须口</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_RUXUKOU" Language="en_US"><Text>Ruxukou</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_GUSU" Language="zh_Hans_CN"><Text>姑苏</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_GUSU" Language="en_US"><Text>Gusu</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_CHANGSHA" Language="zh_Hans_CN"><Text>长沙</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_CHANGSHA" Language="en_US"><Text>Changsha</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_WULING" Language="zh_Hans_CN"><Text>武陵</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_WULING" Language="en_US"><Text>Wuling</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LINGLING" Language="zh_Hans_CN"><Text>零陵</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_LINGLING" Language="en_US"><Text>Lingling</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_GUIYANG" Language="zh_Hans_CN"><Text>桂阳</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_GUIYANG" Language="en_US"><Text>Guiyang</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YUANLING" Language="zh_Hans_CN"><Text>沅陵</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YUANLING" Language="en_US"><Text>Yuanling</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YANGZHAI" Language="zh_Hans_CN"><Text>阳翟</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YANGZHAI" Language="en_US"><Text>Yangzhai</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_XINZHENG" Language="zh_Hans_CN"><Text>新郑</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_XINZHENG" Language="en_US"><Text>Xinzheng</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YIYANG" Language="zh_Hans_CN"><Text>宜阳</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YIYANG" Language="en_US"><Text>Yiyang</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_SHANGDANG" Language="zh_Hans_CN"><Text>上党</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_SHANGDANG" Language="en_US"><Text>Shangdang</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YE" Language="zh_Hans_CN"><Text>邺</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YE" Language="en_US"><Text>Ye</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JULU" Language="zh_Hans_CN"><Text>巨鹿</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JULU" Language="en_US"><Text>Julu</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_ZHANGWU" Language="zh_Hans_CN"><Text>章武</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_ZHANGWU" Language="en_US"><Text>Zhangwu</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_PINGYUAN" Language="zh_Hans_CN"><Text>平原</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_PINGYUAN" Language="en_US"><Text>Pingyuan</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_DUKANG" Language="zh_Hans_CN"><Text>督亢</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_DUKANG" Language="en_US"><Text>Dukang</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_DAI" Language="zh_Hans_CN"><Text>代</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_DAI" Language="en_US"><Text>Dai</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YI" Language="zh_Hans_CN"><Text>易</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_YI" Language="en_US"><Text>Yi</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIMO" Language="zh_Hans_CN"><Text>即墨</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JIMO" Language="en_US"><Text>Jimo</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JU" Language="zh_Hans_CN"><Text>莒</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JU" Language="en_US"><Text>Ju</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JINAN" Language="zh_Hans_CN"><Text>济南</Text></Row>
+		<Row Tag="LOC_ZHANGUO_CITY_JINAN" Language="en_US"><Text>Jinan</Text></Row>
+	</LocalizedText>
+</GameData>

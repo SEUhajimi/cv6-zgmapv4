@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameInfo>
+	<Maps>
+		<Row File="{f6b2569b-327f-4e5f-93b4-7be11649accb}ZhanguoV4.lua" Name="LOC_MAP_ZHANGUOV4_NAME" Description="LOC_MAP_ZHANGUOV4_DESC" SortIndex="200"/>
+	</Maps>
+</GameInfo>

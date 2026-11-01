@@ -1,0 +1,9 @@
+战国七雄 V4 · 版本 V4.0（2026-11-01）
+
+怎么确认自己玩的是不是这一版：
+1. 开局选图界面选“战国七雄 V4（标准）”，右侧说明末尾写着（V4.0 · 2026-11-01）。
+2. Mods 界面里这个 Mod 的名字是 Warring States China Map V4.0。
+3. 日志 %LOCALAPPDATA%\Firaxis Games\Sid Meier's Civilization VI\Logs\Lua.log 里搜 Generating Warring States China map，
+   那一行的末尾写着 V4.0 (2026-11-01)。
+
+更新前请先把 Mods 文件夹里旧的 Zhanguo_V4 整个删掉，再放新的。
